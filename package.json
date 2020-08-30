@@ -1,0 +1,37 @@
+{
+  "name": "nezu",
+  "version": "0.0.1",
+  "description": "CLI for create React project",
+  "main": "dist/index.js",
+  "scripts": {
+    "precommit": "lint-staged -v"
+  },
+  "keywords": [
+    "cli",
+    "template",
+    "typescript"
+  ],
+  "author": "al002",
+  "license": "MIT",
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint",
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "@types/node": "^14.6.2",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.1.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}
