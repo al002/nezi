@@ -1,2 +1,2 @@
 # nezu
-CLI for create React project
+CLI for creating JavaScript/TypeScript project 
