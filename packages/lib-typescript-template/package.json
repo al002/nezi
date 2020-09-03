@@ -1,0 +1,9 @@
+{
+  "name": "@nezu/lib-typescript-template",
+  "version": "0.0.1",
+  "description": "TypeScript Library Template",
+  "keywords": ["typescript", "library", "template"],
+  "author": "al002",
+  "license": "MIT",
+  "files": ["template"]
+}

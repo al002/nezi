@@ -6,6 +6,7 @@ import * as inquirer from 'inquirer';
 import * as fs from 'fs-extra';
 
 import * as pkg from './package.json';
+import { spawn } from 'child_process';
 
 interface Options {
   name: string;
@@ -120,12 +121,30 @@ async function prompt(options: PromptOptions) {
     language,
   };
 
+  prepareCreate(createOptions);
+}
+
+function writeInitialPackageJson(root: string, appName: string) {
+  const packageJson = {
+    name: appName,
+    version: '0.1.0',
+    private: true,
+  };
+  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson, null, 2) + os.EOL);
+}
+
+function prepareCreate(options: CreateOptions) {
+  writeInitialPackageJson(options.root, options.appName);
+  const { type } = options;
+
+  process.chdir(options.root);
+
   switch (type) {
     case 'lib':
-      createLib(createOptions);
+      createLib(options);
       break;
     case 'reactSPA':
-      createReactSPA(createOptions);
+      createReactSPA(options);
       break;
     default:
       break;
@@ -134,10 +153,30 @@ async function prompt(options: PromptOptions) {
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 function createLib(options: CreateOptions) {
-  // TODO: create library project from template
+  // TODO: create library project from template. Change dependencies
+  install(options.root, ['file:../../lib-typescript-template']);
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 function createReactSPA(options: CreateOptions) {
   // TODO: create react spa project from template
+}
+
+function install(root: string, dependencies: Array<string>) {
+  return new Promise((resolve, reject) => {
+    process.chdir(root);
+    const command = 'yarn';
+    const args = ['add', '--exact', '--cwd', root, ...dependencies];
+
+    const child = spawn(command, args, { stdio: 'inherit' });
+    child.on('close', (code) => {
+      if (code !== 0) {
+        reject({
+          command: `${command} ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
+    });
+  });
 }
