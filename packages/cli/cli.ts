@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as os from 'os';
 import * as chalk from 'chalk';
 import * as commander from 'commander';
 import * as inquirer from 'inquirer';
@@ -29,7 +28,7 @@ interface CreateOptions extends PromptOptions {
 let projectDir: any;
 
 export function init(): void {
-  const program = new commander.Command('nezu')
+  const program = new commander.Command('nezi')
     .version(pkg.version)
     .arguments('<project-directory>')
     .usage(`${chalk.green('<project-directory>')}`)

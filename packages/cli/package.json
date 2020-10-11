@@ -2,7 +2,7 @@
   "name": "@nezi/cli",
   "version": "0.0.1",
   "description": "CLI for creating TypeScript/JavaScript project",
-  "main": "lib/index",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
     "nezi": "lib/index.js"
