@@ -5,7 +5,7 @@
   "main": "lib/index",
   "types": "lib/index.d.ts",
   "bin": {
-    "nezu": "lib/index.js"
+    "nezi": "lib/index.js"
   },
   "files": [
     "lib",
