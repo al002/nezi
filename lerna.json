@@ -4,8 +4,8 @@
     "packages/*"
   ],
   "command": {
-    "publish": {
-      "message": "chore: release %s"
+    "version": {
+      "message": "chore(release): publish %s"
     }
   },
   "useWorkspaces": true,
