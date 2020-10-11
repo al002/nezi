@@ -3,6 +3,11 @@
   "packages": [
     "packages/*"
   ],
+  "command": {
+    "publish": {
+      "message": "chore: release %s"
+    }
+  },
   "useWorkspaces": true,
   "version": "independent"
 }
