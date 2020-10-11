@@ -1,5 +1,5 @@
 {
-  "name": "@nezu/cli",
+  "name": "@nezi/cli",
   "version": "0.0.1",
   "description": "CLI for creating TypeScript/JavaScript project",
   "main": "lib/index",
