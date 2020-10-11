@@ -1,7 +1,7 @@
 {
   "name": "@nezu/cli",
   "version": "0.0.1",
-  "description": "cli",
+  "description": "CLI for creating TypeScript/JavaScript project",
   "main": "lib/index",
   "types": "lib/index.d.ts",
   "bin": {
@@ -11,11 +11,14 @@
     "lib",
     "templates"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./lib",
     "compile": "tsc -p tsconfig.json",
-    "prepublishOnly": "yarn run build"
+    "prepublish": "yarn run build"
   },
   "author": "al002",
   "license": "MIT",
