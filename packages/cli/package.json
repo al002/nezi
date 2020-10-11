@@ -8,7 +8,8 @@
     "nezu": "lib/index.js"
   },
   "files": [
-    "lib"
+    "lib",
+    "templates"
   ],
   "scripts": {
     "build": "yarn run clean && yarn run compile",

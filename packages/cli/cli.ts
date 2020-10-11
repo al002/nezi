@@ -8,6 +8,9 @@ import * as fs from 'fs-extra';
 import * as pkg from './package.json';
 import { spawn } from 'child_process';
 
+type Language = 'ts' | 'js';
+type TemplateType = 'lib' | 'reactSPA';
+
 interface Options {
   name: string;
   verbose: boolean;
@@ -19,8 +22,8 @@ interface PromptOptions extends Options {
 }
 
 interface CreateOptions extends PromptOptions {
-  type: string;
-  language: string;
+  type: TemplateType;
+  language: Language;
 }
 
 let projectDir: any;
@@ -63,8 +66,6 @@ function createProject(options: Options): void {
     console.error(`${chalk.redBright('Directory is exist, please specify another directory')}`);
     process.exit(1);
   }
-
-  fs.ensureDirSync(name);
 
   prompt({
     root,
@@ -124,20 +125,8 @@ async function prompt(options: PromptOptions) {
   prepareCreate(createOptions);
 }
 
-function writeInitialPackageJson(root: string, appName: string) {
-  const packageJson = {
-    name: appName,
-    version: '0.1.0',
-    private: true,
-  };
-  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson, null, 2) + os.EOL);
-}
-
 function prepareCreate(options: CreateOptions) {
-  writeInitialPackageJson(options.root, options.appName);
   const { type } = options;
-
-  process.chdir(options.root);
 
   switch (type) {
     case 'lib':
@@ -151,10 +140,35 @@ function prepareCreate(options: CreateOptions) {
   }
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+function copy(src: string, dest: string) {
+  fs.copySync(src, dest);
+}
+
+function renameIgnoreFile() {
+  fs.renameSync(path.resolve('gitignore'), path.resolve('.gitignore'));
+}
+
+function chooseTemplate(type: TemplateType, language: Language): string {
+  let relative = '';
+  if (type === 'lib') {
+    if (language === 'js') {
+      relative = '../templates/lib-javascript-template/template';
+    } else {
+      relative = '../templates/lib-typescript-template/template';
+    }
+  } else {
+    // TODO: react template
+  }
+
+  return path.resolve(__dirname, relative);
+}
+
 function createLib(options: CreateOptions) {
-  // TODO: create library project from template. Change dependencies
-  install(options.root, ['file:../../lib-typescript-template']);
+  const template = chooseTemplate(options.type, options.language);
+  copy(template, options.root);
+  process.chdir(options.root);
+  renameIgnoreFile();
+  install(options.root);
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
@@ -162,11 +176,10 @@ function createReactSPA(options: CreateOptions) {
   // TODO: create react spa project from template
 }
 
-function install(root: string, dependencies: Array<string>) {
+function install(root: string) {
   return new Promise((resolve, reject) => {
-    process.chdir(root);
     const command = 'yarn';
-    const args = ['add', '--exact', '--cwd', root, ...dependencies];
+    const args = ['--exact', '--cwd', root];
 
     const child = spawn(command, args, { stdio: 'inherit' });
     child.on('close', (code) => {
