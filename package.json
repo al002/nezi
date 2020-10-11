@@ -9,7 +9,7 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna run clean",
     "build": "lerna run build",
-    "release": "lerna publish",
+    "release": "lerna publish --canary --conventional-commits",
     "precommit": "lint-staged -v"
   },
   "keywords": [
