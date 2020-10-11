@@ -8,6 +8,10 @@
     "nezi": "lib/index.js"
   },
   "files": [
+    "index.js",
+    "cli.js",
+    "index.d.ts",
+    "cli.d.ts",
     "lib",
     "templates"
   ],
